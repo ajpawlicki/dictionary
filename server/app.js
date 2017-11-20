@@ -5,17 +5,13 @@ const fs = require('fs');
 
 app.use(express.static(__dirname + '/../client/'));
 
-let dictionary;
-
-fs.readFile(__dirname + '/data/dictionary.txt', 'utf8', (err, data) => {
-  dictionary = data
-    .split('\n')
-    .reduce((dic, word) => {
-      dic.set(word, true);
-      
-      return dic;
-    }, new Map());
-});
+const dictionary = fs.readFileSync(__dirname + '/data/dictionary.txt', 'utf8')
+  .split('\n')
+  .reduce((dic, word) => {
+    dic.set(word, true);
+    
+    return dic;
+  }, new Map());
 
 const getWords = (str) => {
   const words = {};
